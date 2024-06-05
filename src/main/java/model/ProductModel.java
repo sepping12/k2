@@ -1,5 +1,4 @@
 package model;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,8 +70,6 @@ public class ProductModel {
 				bean.setData(rs.getDate("dataAnnuncio"));
 				bean.setImmagine(rs.getString("model"));
 			}
-			
-			
 
 		} finally {
 			try {
@@ -93,7 +90,7 @@ public class ProductModel {
 
 		int result = 0;
 
-		String deleteSQL = "UPDATE " + ProductModel.TABLE_NAME + "SET deleted = false WHERE codice = ?";
+		String deleteSQL = "UPDATE " + ProductModel.TABLE_NAME + " SET deleted = true WHERE codice = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
@@ -113,6 +110,7 @@ public class ProductModel {
 		}
 		return (result != 0);
 	}
+
 	public synchronized Collection<ProductBean> doRetrieveAll(String where) throws SQLException {
 		Connection connection = null;
 		Connection connection2 = null;
@@ -121,12 +119,18 @@ public class ProductModel {
 
 		Collection<ProductBean> products = new LinkedList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductModel.TABLE_NAME + " WHERE deleted = 'false' AND nomeTipologia = '" + where + "'";
+		String selectSQL = "SELECT * FROM " + ProductModel.TABLE_NAME + " WHERE deleted = false";
+		if (where != null && !where.isEmpty()) {
+			selectSQL += " AND nomeTipologia = ?";
+		}
 		String sql2 = "SELECT AVG(votazione) FROM Recensione WHERE codiceProdotto = ?";
 		
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
+			if (where != null && !where.isEmpty()) {
+				preparedStatement.setString(1, where);
+			}
 
 			ResultSet rs = preparedStatement.executeQuery();
 
