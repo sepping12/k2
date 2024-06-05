@@ -71,6 +71,7 @@
                     <textarea id="descrizione" name="descrizione" rows="4" cols="60" style="resize: none; width: 450px; height: 80px" required></textarea>
                 </div>
             </div>
+            
             <div class="button">
                 <input type="submit" class="vendi" name="vendi" id="vendi" value="Vendi il prodotto" style="margin-bottom: 40px">
             </div>
