@@ -6,34 +6,33 @@
   </welcome-file-list>
 
   <login-config>
-  	<auth-method>FORM</auth-method>
-  	<form-login-config>
-  		<form-login-page>/loginPage.jsp</form-login-page>
-  		<form-error-page>/login-error.jsp</form-error-page>
-  	</form-login-config> 
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+      <form-login-page>/loginPage.jsp</form-login-page>
+      <form-error-page>/login-error.jsp</form-error-page>
+    </form-login-config> 
   </login-config>
      
   <security-constraint>
-  	<web-resource-collection>
-  		<web-resource-name>Sensitive</web-resource-name>
-  		<url-pattern>/testSecurity.jsp</url-pattern>
-  	</web-resource-collection>
-  	<auth-constraint>
-  		<role-name>registeredUser</role-name>
-  	</auth-constraint> <!--   
-  	<user-data-constraint>
-  		<transport-guarantee>
-  			CONFIDENTIAL
-  		</transport-guarantee>
-  	</user-data-constraint>
-  -->
+    <web-resource-collection>
+      <web-resource-name>Sensitive</web-resource-name>
+      <url-pattern>/testSecurity.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>registeredUser</role-name>
+    </auth-constraint> 
   </security-constraint>
   
   <security-role>
-  	<role-name>administrator</role-name>
+    <role-name>administrator</role-name>
   </security-role>
   <security-role>
-  	<role-name>registeredUser</role-name>
+    <role-name>registeredUser</role-name>
   </security-role>
-  
+
+  <!-- Gestione dell'errore 500 -->
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error500.jsp</location>
+  </error-page>
 </web-app>
